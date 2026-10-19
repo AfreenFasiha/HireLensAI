@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import { useAuth } from '../contexts/AuthContext';
@@ -10,14 +10,15 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
-  const { isAuthenticated, isLoading, user, hasRole } = useAuth();
+  const { isAuthenticated, isLoading, hasRole } = useAuth();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-background">
+      <div className="flex h-screen w-full items-center justify-center bg-[#000000]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-primary animate-spin" />
-          <p className="text-sm font-medium text-muted-foreground">Authenticating session...</p>
+          <Loader2 className="w-8 h-8 text-white animate-spin" />
+          <p className="text-sm font-medium text-neutral-400">Authenticating session...</p>
         </div>
       </div>
     );
@@ -32,9 +33,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+    <div className="flex min-h-screen bg-[#000000] text-white">
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={() => setMobileOpen(false)} />
+      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#000000]">
         <Outlet />
       </main>
     </div>

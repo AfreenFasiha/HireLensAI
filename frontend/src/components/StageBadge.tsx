@@ -9,65 +9,65 @@ interface StageBadgeProps {
 const STAGE_CONFIG: Record<string, { label: string; bg: string; text: string; border: string }> = {
   APPLIED: {
     label: 'Applied',
-    bg: 'bg-indigo-500/10 dark:bg-indigo-500/20',
-    text: 'text-indigo-600 dark:text-indigo-400',
-    border: 'border-indigo-500/30'
+    bg: 'bg-black/5',
+    text: 'text-[#1b1b1b]',
+    border: 'border-black/10'
   },
   SCREENING: {
     label: 'Screening',
-    bg: 'bg-purple-500/10 dark:bg-purple-500/20',
-    text: 'text-purple-600 dark:text-purple-400',
-    border: 'border-purple-500/30'
+    bg: 'bg-[#426188]/10',
+    text: 'text-[#426188]',
+    border: 'border-[#426188]/20'
   },
   SHORTLISTED: {
     label: 'Shortlisted',
-    bg: 'bg-cyan-500/10 dark:bg-cyan-500/20',
-    text: 'text-cyan-600 dark:text-cyan-400',
-    border: 'border-cyan-500/30'
+    bg: 'bg-[#2b7fff]/10',
+    text: 'text-[#2b7fff]',
+    border: 'border-[#2b7fff]/25'
   },
   INTERVIEW: {
     label: 'Interview',
-    bg: 'bg-amber-500/10 dark:bg-amber-500/20',
-    text: 'text-amber-600 dark:text-amber-400',
-    border: 'border-amber-500/30'
+    bg: 'bg-neutral-800 text-white',
+    text: 'text-neutral-100',
+    border: 'border-neutral-700'
   },
   OFFER: {
     label: 'Offer',
-    bg: 'bg-emerald-500/10 dark:bg-emerald-500/20',
-    text: 'text-emerald-600 dark:text-emerald-400',
-    border: 'border-emerald-500/30'
+    bg: 'bg-neutral-900',
+    text: 'text-white',
+    border: 'border-neutral-600'
   },
   HIRED: {
     label: 'Hired',
-    bg: 'bg-green-500/15 dark:bg-green-500/25',
-    text: 'text-green-600 dark:text-green-400',
-    border: 'border-green-500/40'
+    bg: 'bg-[#1b1b1b]',
+    text: 'text-white',
+    border: 'border-black'
   },
   REJECTED: {
     label: 'Rejected',
-    bg: 'bg-rose-500/10 dark:bg-rose-500/20',
-    text: 'text-rose-600 dark:text-rose-400',
-    border: 'border-rose-500/30'
+    bg: 'bg-black/5',
+    text: 'text-neutral-500',
+    border: 'border-black/10'
   },
   WITHDRAWN: {
     label: 'Withdrawn',
-    bg: 'bg-slate-500/10 dark:bg-slate-500/20',
-    text: 'text-slate-600 dark:text-slate-400',
-    border: 'border-slate-500/30'
+    bg: 'bg-black/5',
+    text: 'text-neutral-400',
+    border: 'border-black/10'
   }
 };
 
 export const StageBadge: React.FC<StageBadgeProps> = ({ stage, className = '' }) => {
   const config = STAGE_CONFIG[stage] || {
     label: stage,
-    bg: 'bg-slate-500/10 dark:bg-slate-500/20',
-    text: 'text-slate-600 dark:text-slate-400',
-    border: 'border-slate-500/30'
+    bg: 'bg-black/5',
+    text: 'text-neutral-600',
+    border: 'border-black/10'
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.bg} ${config.text} ${config.border} ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${config.bg} ${config.text} ${config.border} ${className}`}
     >
       <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current opacity-70" />
       {config.label}

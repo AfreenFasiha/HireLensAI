@@ -4,75 +4,179 @@
 
 @layer base {
   :root {
-    --background: 220 20% 98%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 243 75% 59%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 243 75% 96%;
-    --accent-foreground: 243 75% 45%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 243 75% 59%;
+    --color-whiteout: #ffffff;
+    --color-haze: #f5f5f5;
+    --color-ink: #1b1b1b;
+    --color-black-void: #000000;
+    --color-twilight-blue: #426188;
+    --color-signal-blue: #2b7fff;
+
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #f5f5f5;
+    --card-foreground: #1b1b1b;
+    --primary: #ffffff;
+    --primary-foreground: #1b1b1b;
+    --border: rgba(255, 255, 255, 0.16);
+
+    --radius-card: 12px;
+    --radius-button: 8px;
+    --radius-input: 4px;
+    --radius-pill: 9999px;
+
+    --page-max-width: 1150px;
   }
 
   .dark {
-    --background: 224 28% 8%;
-    --foreground: 210 40% 98%;
-    --card: 224 25% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 224 25% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 243 75% 65%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 224 20% 16%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 224 20% 16%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 243 45% 20%;
-    --accent-foreground: 243 75% 80%;
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 224 20% 18%;
-    --input: 224 20% 18%;
-    --ring: 243 75% 65%;
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #f5f5f5;
+    --card-foreground: #1b1b1b;
+    --primary: #ffffff;
+    --primary-foreground: #1b1b1b;
+    --border: rgba(255, 255, 255, 0.16);
   }
-}
 
-@layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
   }
+
   body {
-    @apply bg-background text-foreground antialiased font-sans selection:bg-primary/20 selection:text-primary;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Custom modern scrollbars */
+/* Air Design System Components */
+.air-card {
+  background: #f5f5f5;
+  color: #1b1b1b;
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: none;
+}
+
+.air-button-ghost {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 500;
+  transition: background 180ms ease, border-color 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.air-button-ghost:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.air-button-light {
+  background: #f5f5f5;
+  color: #1b1b1b;
+  border: 1px solid #1b1b1b;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 180ms ease, opacity 180ms ease;
+  cursor: pointer;
+}
+
+.air-button-light:hover {
+  background: #e5e5e5;
+}
+
+.air-button-solid-white {
+  background: #ffffff;
+  color: #1b1b1b;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 180ms ease, transform 150ms ease;
+  cursor: pointer;
+}
+
+.air-button-solid-white:hover {
+  opacity: 0.92;
+}
+
+.air-input {
+  background: #f5f5f5;
+  color: #1b1b1b;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.air-input:focus {
+  outline: none;
+  border-color: #2b7fff;
+  box-shadow: 0 0 0 1px #2b7fff;
+}
+
+.air-input::placeholder {
+  color: rgba(27, 27, 27, 0.45);
+}
+
+.air-input-dark {
+  background: #0d0d0d;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.air-input-dark:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px #ffffff;
+}
+
+.air-input-dark::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Custom minimal scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.4);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.6);
+  background: rgba(255, 255, 255, 0.4);
 }

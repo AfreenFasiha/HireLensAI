@@ -16,15 +16,14 @@ export const ScoreBadge: React.FC<ScoreBadgeProps> = ({
 }) => {
   const rounded = Math.round(score);
 
-  let colorClasses = 'bg-slate-500/10 text-slate-700 dark:text-slate-300 border-slate-500/20';
+  // Clean, monochrome with selective Signal Blue emphasis for top matches
+  let colorClasses = 'bg-black/5 text-[#1b1b1b] border-black/10';
   if (rounded >= 85) {
-    colorClasses = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
+    colorClasses = 'bg-[#2b7fff]/10 text-[#2b7fff] border-[#2b7fff]/30';
   } else if (rounded >= 70) {
-    colorClasses = 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30';
-  } else if (rounded >= 55) {
-    colorClasses = 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30';
+    colorClasses = 'bg-[#426188]/10 text-[#426188] border-[#426188]/30';
   } else {
-    colorClasses = 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30';
+    colorClasses = 'bg-black/5 text-neutral-600 border-black/10';
   }
 
   const sizeClasses = {
@@ -35,7 +34,7 @@ export const ScoreBadge: React.FC<ScoreBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center rounded-lg border font-mono tracking-tight transition-all ${colorClasses} ${sizeClasses} ${className}`}
+      className={`inline-flex items-center rounded-md border font-mono tracking-tight ${colorClasses} ${sizeClasses} ${className}`}
       title={`AI Match Score: ${score}%`}
     >
       {showIcon && <Sparkles className="w-3.5 h-3.5 shrink-0 opacity-80" />}

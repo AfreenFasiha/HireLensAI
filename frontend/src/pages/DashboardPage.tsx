@@ -63,22 +63,22 @@ export const DashboardPage: React.FC = () => {
   }, [daysFilter]);
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#000000] text-white">
       <Topbar
         title="Dashboard"
-        subtitle="Intelligent recruitment overview, pipeline status, and candidate rankings."
+        subtitle="Intelligent recruitment telemetry, pipeline velocity, and candidate rankings."
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => setIsResumeModalOpen(true)}
-              className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-secondary border border-border hover:bg-secondary/80 text-foreground flex items-center gap-1.5 transition-colors"
+              className="air-button-ghost text-xs px-3.5 py-1.5"
             >
-              <UploadCloud className="w-3.5 h-3.5 text-primary" />
+              <UploadCloud className="w-3.5 h-3.5 opacity-80" />
               <span>Parse Resume</span>
             </button>
             <Link
               to="/jobs?create=true"
-              className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5 shadow-sm shadow-primary/20 transition-all"
+              className="air-button-solid-white text-xs px-3.5 py-1.5"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Create Job</span>
@@ -87,36 +87,36 @@ export const DashboardPage: React.FC = () => {
         }
       />
 
-      <div className="p-8 space-y-8 flex-1">
+      <div className="max-w-[1150px] mx-auto w-full p-6 lg:p-8 space-y-12 flex-1">
         {/* Date Filter & Status */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-muted-foreground">Date Range:</span>
-            <div className="flex rounded-lg border border-border bg-card p-0.5 text-xs">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">Timeframe:</span>
+            <div className="flex rounded-full border border-white/20 bg-white/5 p-1 text-xs">
               {[7, 30, 90].map((d) => (
                 <button
                   key={d}
                   onClick={() => setDaysFilter(d)}
-                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                  className={`px-3 py-1 rounded-full font-mono text-xs transition-all ${
                     daysFilter === d
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'bg-white text-black font-semibold shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  {d} Days
+                  {d}d
                 </button>
               ))}
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">Real-time PostgreSQL telemetry</p>
+          <p className="text-xs text-neutral-500 font-mono">Live PostgreSQL Stream</p>
         </div>
 
-        {/* 6 Metric KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        {/* 6 Metric KPI Cards (air-card off-white) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           <MetricCard
-            title="Total Candidates"
+            title="Candidates"
             value={analytics?.overview?.total_candidates ?? 0}
-            subtitle="In database talent pool"
+            subtitle="Talent records"
             icon={Users}
           />
           <MetricCard
@@ -134,19 +134,19 @@ export const DashboardPage: React.FC = () => {
           <MetricCard
             title="Shortlisted"
             value={analytics?.overview?.candidates_shortlisted ?? 0}
-            subtitle="Qualified candidates"
+            subtitle="Qualified applicants"
             icon={CheckCircle2}
           />
           <MetricCard
             title="Monthly Apps"
             value={analytics?.overview?.applications_this_month ?? 0}
-            subtitle="Current calendar month"
+            subtitle="Submissions"
             icon={TrendingUp}
           />
           <MetricCard
-            title="Avg Match Score"
+            title="Match Avg"
             value={`${analytics?.overview?.average_match_score ?? 0}%`}
-            subtitle="Explainable AI rating"
+            subtitle="Explainable rating"
             icon={Sparkles}
           />
         </div>
@@ -154,14 +154,14 @@ export const DashboardPage: React.FC = () => {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Applications Trend Area Chart */}
-          <div className="lg:col-span-2 p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="lg:col-span-2 air-card space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <div>
-                <h3 className="text-base font-bold text-foreground">Application Activity Timeline</h3>
-                <p className="text-xs text-muted-foreground">Applicant submissions across selected timeframe</p>
+                <h3 className="text-base font-bold text-[#1b1b1b]">Application Activity Volume</h3>
+                <p className="text-xs text-neutral-500">Applicant submissions across selected timeframe</p>
               </div>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                Live Data
+              <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded bg-black/5 text-[#1b1b1b] border border-black/10">
+                Synchronized
               </span>
             </div>
 
@@ -170,45 +170,46 @@ export const DashboardPage: React.FC = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={analytics.applications_trend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
-                      <linearGradient id="appTrend" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stop-color="#6366f1" stop-opacity={0.3} />
-                        <stop offset="95%" stop-color="#6366f1" stop-opacity={0} />
+                      <linearGradient id="airAppTrend" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#426188" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#426188" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
                     <XAxis
                       dataKey="date"
-                      tick={{ fontSize: 10, fill: '#94a3b8' }}
+                      tick={{ fontSize: 10, fill: '#737373' }}
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(val) => val.slice(5)}
                     />
                     <YAxis
-                      tick={{ fontSize: 10, fill: '#94a3b8' }}
+                      tick={{ fontSize: 10, fill: '#737373' }}
                       tickLine={false}
                       axisLine={false}
                       allowDecimals={false}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#1e293b',
-                        borderColor: '#334155',
-                        borderRadius: '0.5rem',
-                        fontSize: '0.75rem',
-                        color: '#f8fafc'
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e5e5e5',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        color: '#1b1b1b',
+                        boxShadow: 'none'
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="applications"
-                      stroke="#6366f1"
+                      stroke="#426188"
                       strokeWidth={2}
                       fillOpacity={1}
-                      fill="url(#appTrend)"
+                      fill="url(#airAppTrend)"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                <div className="flex h-full items-center justify-center text-xs text-neutral-500">
                   No activity recorded for this period
                 </div>
               )}
@@ -216,13 +217,13 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Hiring Pipeline Stage Distribution Bar Chart */}
-          <div className="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="air-card space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <div>
-                <h3 className="text-base font-bold text-foreground">Pipeline Stages</h3>
-                <p className="text-xs text-muted-foreground">Current applicant stage breakdown</p>
+                <h3 className="text-base font-bold text-[#1b1b1b]">Pipeline Stages</h3>
+                <p className="text-xs text-neutral-500">Applicant status breakdown</p>
               </div>
-              <Link to="/pipeline" className="text-xs text-primary hover:underline font-medium flex items-center gap-1">
+              <Link to="/pipeline" className="text-xs text-[#2b7fff] hover:underline font-medium font-mono flex items-center gap-1">
                 Kanban <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
@@ -235,21 +236,22 @@ export const DashboardPage: React.FC = () => {
                     <YAxis
                       dataKey="stage"
                       type="category"
-                      tick={{ fontSize: 9, fill: '#94a3b8' }}
+                      tick={{ fontSize: 9, fill: '#737373' }}
                       tickLine={false}
                       axisLine={false}
                       width={70}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#1e293b',
-                        borderColor: '#334155',
-                        borderRadius: '0.5rem',
-                        fontSize: '0.75rem',
-                        color: '#f8fafc'
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e5e5e5',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        color: '#1b1b1b',
+                        boxShadow: 'none'
                       }}
                     />
-                    <Bar dataKey="count" fill="#818cf8" radius={[0, 4, 4, 0]} />
+                    <Bar dataKey="count" fill="#1b1b1b" radius={[0, 4, 4, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -260,44 +262,44 @@ export const DashboardPage: React.FC = () => {
         {/* Bottom Section: Recent Applications & Upcoming Interviews */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Applications Table */}
-          <div className="lg:col-span-2 p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="lg:col-span-2 air-card space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <div>
-                <h3 className="text-base font-bold text-foreground">Recent Applications</h3>
-                <p className="text-xs text-muted-foreground">Candidates evaluated by AI matching engine</p>
+                <h3 className="text-base font-bold text-[#1b1b1b]">Recent Applications</h3>
+                <p className="text-xs text-neutral-500">Evaluated candidate submissions</p>
               </div>
-              <Link to="/candidates" className="text-xs text-primary hover:underline font-medium flex items-center gap-1">
-                View all candidates <ChevronRight className="w-3 h-3" />
+              <Link to="/candidates" className="text-xs text-[#2b7fff] hover:underline font-mono font-medium flex items-center gap-1">
+                Talent Pool <ChevronRight className="w-3 h-3" />
               </Link>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-border text-muted-foreground uppercase font-semibold text-[10px] tracking-wider">
+                  <tr className="border-b border-black/10 text-neutral-500 uppercase font-mono text-[10px] tracking-wider">
                     <th className="py-2.5 px-3">Candidate</th>
                     <th className="py-2.5 px-3">Target Role</th>
-                    <th className="py-2.5 px-3">AI Match</th>
+                    <th className="py-2.5 px-3">Match</th>
                     <th className="py-2.5 px-3">Status</th>
-                    <th className="py-2.5 px-3 text-right">Actions</th>
+                    <th className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border">
+                <tbody className="divide-y divide-black/5">
                   {recentApps.map((app) => (
-                    <tr key={app.id} className="hover:bg-secondary/40 transition-colors">
+                    <tr key={app.id} className="hover:bg-black/[0.02] transition-colors">
                       <td className="py-3 px-3">
-                        <p className="font-semibold text-foreground text-sm">{app.candidate_name}</p>
-                        <p className="text-[11px] text-muted-foreground">{app.candidate_email}</p>
+                        <p className="font-bold text-[#1b1b1b] text-sm">{app.candidate_name}</p>
+                        <p className="text-[11px] text-neutral-500 font-mono">{app.candidate_email}</p>
                       </td>
                       <td className="py-3 px-3">
-                        <p className="font-medium text-foreground">{app.job_title}</p>
-                        <p className="text-[11px] text-muted-foreground">{app.job_department}</p>
+                        <p className="font-medium text-[#1b1b1b]">{app.job_title}</p>
+                        <p className="text-[11px] text-neutral-500">{app.job_department}</p>
                       </td>
                       <td className="py-3 px-3">
                         {app.match_score ? (
                           <ScoreBadge score={app.match_score.overall_score} size="sm" />
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-neutral-400 font-mono">—</span>
                         )}
                       </td>
                       <td className="py-3 px-3">
@@ -306,7 +308,7 @@ export const DashboardPage: React.FC = () => {
                       <td className="py-3 px-3 text-right">
                         <Link
                           to={`/jobs/${app.job_id}/rankings`}
-                          className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+                          className="text-[#2b7fff] hover:underline font-mono font-medium"
                         >
                           Rankings
                         </Link>
@@ -315,7 +317,7 @@ export const DashboardPage: React.FC = () => {
                   ))}
                   {recentApps.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-muted-foreground">
+                      <td colSpan={5} className="py-8 text-center text-neutral-500">
                         No applications recorded yet.
                       </td>
                     </tr>
@@ -326,28 +328,28 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Upcoming Interviews Card */}
-          <div className="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="air-card space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <div>
-                <h3 className="text-base font-bold text-foreground">Upcoming Interviews</h3>
-                <p className="text-xs text-muted-foreground">Next scheduled recruitment rounds</p>
+                <h3 className="text-base font-bold text-[#1b1b1b]">Upcoming Interviews</h3>
+                <p className="text-xs text-neutral-500">Scheduled recruiter rounds</p>
               </div>
-              <Link to="/interviews" className="text-xs text-primary hover:underline font-medium flex items-center gap-1">
+              <Link to="/interviews" className="text-xs text-[#2b7fff] hover:underline font-mono font-medium flex items-center gap-1">
                 Calendar <ChevronRight className="w-3 h-3" />
               </Link>
             </div>
 
             <div className="space-y-3">
               {upcomingInterviews.map((iv) => (
-                <div key={iv.id} className="p-3.5 rounded-xl border border-border bg-secondary/30 space-y-2">
+                <div key={iv.id} className="p-3.5 rounded-lg border border-black/10 bg-white space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-foreground truncate max-w-[180px]">{iv.title}</span>
-                    <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                    <span className="text-xs font-bold text-[#1b1b1b] truncate max-w-[170px]">{iv.title}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/5 text-[#1b1b1b] border border-black/10">
                       {iv.interview_type}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Clock className="w-3.5 h-3.5 text-primary" />
+                  <div className="flex items-center gap-2 text-xs text-neutral-500 font-mono">
+                    <Clock className="w-3.5 h-3.5 text-neutral-700" />
                     <span>{new Date(iv.scheduled_start).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                   {iv.meeting_link && (
@@ -355,7 +357,7 @@ export const DashboardPage: React.FC = () => {
                       href={iv.meeting_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium pt-1"
+                      className="inline-flex items-center gap-1 text-xs text-[#2b7fff] hover:underline font-mono pt-1"
                     >
                       <span>Join Meeting</span>
                       <ExternalLink className="w-3 h-3" />
@@ -364,7 +366,7 @@ export const DashboardPage: React.FC = () => {
                 </div>
               ))}
               {upcomingInterviews.length === 0 && (
-                <div className="py-8 text-center text-xs text-muted-foreground">
+                <div className="py-8 text-center text-xs text-neutral-500">
                   No upcoming interviews scheduled.
                 </div>
               )}

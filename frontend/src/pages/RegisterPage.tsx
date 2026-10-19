@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Sparkles, Building, User, Mail, Lock, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
+import { Building, User, Mail, Lock, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export const RegisterPage: React.FC = () => {
@@ -32,27 +32,28 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-primary/20 selection:text-primary">
+    <div className="min-h-screen bg-[#000000] text-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-white selection:text-black">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link to="/" className="inline-flex items-center gap-2.5 mb-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-violet-600 shadow-md shadow-primary/20 text-white font-bold">
-            <Sparkles className="w-5 h-5" />
+        <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 border border-white/20 text-white font-mono font-bold text-base">
+            H
           </div>
-          <span className="font-bold tracking-tight text-2xl text-foreground">HireLens AI</span>
+          <span className="font-semibold tracking-widest text-xl text-white uppercase">HireLens AI</span>
         </Link>
-        <h2 className="text-xl font-bold tracking-tight text-foreground">Create organization recruitment workspace</h2>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <h2 className="text-xl font-bold tracking-tight text-white">Create organization workspace</h2>
+        <p className="mt-1 text-xs text-neutral-400">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-primary hover:underline">
+          <Link to="/login" className="font-medium text-white underline hover:text-neutral-300">
             Sign in
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-card py-8 px-6 sm:px-10 shadow-xl rounded-2xl border border-border space-y-6">
+        {/* Air off-white card */}
+        <div className="air-card space-y-6">
           {error && (
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs">
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-mono">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -60,9 +61,9 @@ export const RegisterPage: React.FC = () => {
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Company / Organization Name *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Organization Name *</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
                   <Building className="h-4 w-4" />
                 </div>
                 <input
@@ -70,16 +71,16 @@ export const RegisterPage: React.FC = () => {
                   required
                   value={formData.organization_name}
                   onChange={(e) => setFormData({ ...formData, organization_name: e.target.value })}
-                  className="block w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input pl-9"
                   placeholder="Acme Corporation"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Your Full Name *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Full Name *</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
                   <User className="h-4 w-4" />
                 </div>
                 <input
@@ -87,16 +88,16 @@ export const RegisterPage: React.FC = () => {
                   required
                   value={formData.full_name}
                   onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                  className="block w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input pl-9"
                   placeholder="Sarah Connor"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Work Email *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Work Email *</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
                   <Mail className="h-4 w-4" />
                 </div>
                 <input
@@ -104,16 +105,16 @@ export const RegisterPage: React.FC = () => {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="block w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input pl-9"
                   placeholder="sarah@acme.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Password (min 8 characters) *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Password (min 8 characters) *</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
@@ -122,7 +123,7 @@ export const RegisterPage: React.FC = () => {
                   minLength={8}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="block w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input pl-9"
                   placeholder="••••••••"
                 />
               </div>
@@ -131,12 +132,12 @@ export const RegisterPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center items-center py-2.5 px-4 rounded-lg shadow-sm text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50"
+              className="w-full flex justify-center items-center py-2.5 px-4 rounded-lg bg-[#1b1b1b] text-white hover:bg-black font-semibold text-xs tracking-wider uppercase transition-all disabled:opacity-50"
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-1.5 font-mono">
                   Create Workspace <ArrowRight className="w-4 h-4" />
                 </span>
               )}

@@ -23,20 +23,20 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   return (
     <div
-      className={`relative overflow-hidden rounded-xl border border-border bg-card p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/40 ${className}`}
+      className={`air-card flex flex-col justify-between transition-all duration-150 ${className}`}
     >
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-muted-foreground">{title}</p>
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <Icon className="h-5 w-5" />
+        <p className="text-xs font-medium tracking-wide text-neutral-600 uppercase font-mono">{title}</p>
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black/[0.06] text-[#1b1b1b]">
+          <Icon className="h-4 w-4" />
         </div>
       </div>
       <div className="mt-4 flex items-baseline gap-2">
-        <h3 className="text-2xl font-bold tracking-tight text-foreground font-mono">{value}</h3>
+        <h3 className="text-3xl font-bold tracking-tight text-[#1b1b1b] font-mono">{value}</h3>
         {trend && (
           <span
             className={`inline-flex items-center text-xs font-semibold ${
-              trend.isPositive ? 'text-emerald-500' : 'text-rose-500'
+              trend.isPositive ? 'text-neutral-700' : 'text-neutral-500'
             }`}
           >
             {trend.value}
@@ -44,7 +44,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         )}
       </div>
       {subtitle && (
-        <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
+        <p className="mt-1 text-xs text-neutral-500">{subtitle}</p>
       )}
     </div>
   );

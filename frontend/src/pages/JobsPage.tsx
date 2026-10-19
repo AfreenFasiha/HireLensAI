@@ -4,12 +4,10 @@ import {
   Briefcase,
   Plus,
   Search,
-  Filter,
   MapPin,
   Clock,
   Users,
   Sparkles,
-  MoreVertical,
   Edit2,
   Trash2,
   X,
@@ -101,6 +99,7 @@ export const JobsPage: React.FC = () => {
         experience_alignment: 0.15
       }
     });
+    setError(null);
     setIsCreateModalOpen(true);
   };
 
@@ -123,13 +122,25 @@ export const JobsPage: React.FC = () => {
         experience_alignment: 0.15
       }
     });
+    setError(null);
     setIsCreateModalOpen(true);
+  };
+
+  const handleDeleteJob = async (jobId: string) => {
+    if (confirm('Are you sure you want to delete this job opening? Associated candidates and applications will be impacted.')) {
+      try {
+        await api.jobs.delete(jobId);
+        fetchJobs();
+      } catch (err: any) {
+        alert(err.response?.data?.detail || 'Failed to delete job opening');
+      }
+    }
   };
 
   const handleSaveJob = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setIsSubmitting(true);
+    setError(null);
 
     try {
       if (editingJob) {
@@ -140,60 +151,51 @@ export const JobsPage: React.FC = () => {
       setIsCreateModalOpen(false);
       fetchJobs();
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to save job opening.');
+      setError(err.response?.data?.detail || 'Failed to save job opening');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleDeleteJob = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this job opening? This will remove associated applications.')) {
-      try {
-        await api.jobs.delete(id);
-        fetchJobs();
-      } catch (err: any) {
-        alert(err.response?.data?.detail || 'Failed to delete job.');
-      }
-    }
-  };
-
   return (
-    <div className="flex-1 flex flex-col min-h-screen">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#000000] text-white">
       <Topbar
-        title="Job Openings"
-        subtitle="Manage job requisitions, requirements, and candidate ranking profiles."
+        title="Job Management"
+        subtitle="Manage open requisitions, define skill requirements, and calibrate AI weights."
         actions={
           hasRole(['ADMIN', 'RECRUITER']) && (
             <button
               onClick={handleOpenCreate}
-              className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5 shadow-sm shadow-primary/20 transition-all"
+              className="air-button-solid-white text-xs px-3.5 py-1.5"
             >
-              <Plus className="w-4 h-4" />
-              <span>Create New Position</span>
+              <Plus className="w-3.5 h-3.5" />
+              <span>Create Job</span>
             </button>
           )
         }
       />
 
-      <div className="p-8 space-y-6 flex-1">
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-card p-4 rounded-xl border border-border shadow-sm">
-          <div className="relative flex-1 w-full sm:max-w-md">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+      <div className="p-6 lg:p-8 space-y-8 flex-1 max-w-[1150px] w-full mx-auto">
+        {/* Filters and Search Bar */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center p-4 rounded-lg border border-white/10 bg-white/[0.03]">
+          <div className="relative w-full sm:w-80">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
             <input
               type="text"
-              placeholder="Search by title, description, or location..."
+              placeholder="Search by title or keyword..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
-            />
+              className="w-full pl-9 pr-3 py-1.5 text-xs rounded border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
+            >
+            </input>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
+            <span className="text-xs text-neutral-400 font-mono uppercase">Department:</span>
             <select
               value={deptFilter}
               onChange={(e) => setDeptFilter(e.target.value)}
-              className="text-xs py-1.5 px-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+              className="text-xs py-1.5 px-3 rounded border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
             >
               <option value="">All Departments</option>
               <option value="Engineering">Engineering</option>
@@ -204,63 +206,63 @@ export const JobsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Jobs Grid */}
+        {/* Jobs Grid (air-card off-white containers) */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="rounded-2xl border border-border bg-card p-6 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              className="air-card flex flex-col justify-between space-y-4 hover:opacity-95 transition-all"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#426188] font-mono">
                       {job.department}
                     </span>
-                    <h3 className="text-base font-bold text-foreground hover:text-primary transition-colors">
+                    <h3 className="text-base font-bold text-[#1b1b1b] hover:text-[#2b7fff] transition-colors mt-0.5">
                       <Link to={`/jobs/${job.id}/rankings`}>{job.title}</Link>
                     </h3>
                   </div>
 
                   <span
-                    className={`px-2 py-0.5 text-[10px] font-semibold uppercase rounded-full border ${
+                    className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded border ${
                       job.status === 'ACTIVE'
-                        ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30'
-                        : 'bg-slate-500/10 text-slate-600 border-slate-500/30'
+                        ? 'bg-black/5 text-[#1b1b1b] border-black/10'
+                        : 'bg-black/5 text-neutral-400 border-black/10'
                     }`}
                   >
                     {job.status}
                   </span>
                 </div>
 
-                <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
                   {job.description}
                 </p>
 
                 {/* Meta Tags */}
-                <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-muted-foreground pt-1">
+                <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-neutral-500 font-mono pt-1">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-primary" />
+                    <MapPin className="w-3.5 h-3.5 text-neutral-700" />
                     {job.location}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-primary" />
+                    <Clock className="w-3.5 h-3.5 text-neutral-700" />
                     {job.employment_type.replace('_', ' ')}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Briefcase className="w-3.5 h-3.5 text-primary" />
+                    <Briefcase className="w-3.5 h-3.5 text-neutral-700" />
                     {job.min_experience_years}+ yrs
                   </span>
                 </div>
 
                 {/* Required Skills Badges */}
                 <div className="pt-2">
-                  <p className="text-[11px] font-semibold text-muted-foreground mb-1.5">Required Skills</p>
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 mb-1.5">Required Skills</p>
                   <div className="flex flex-wrap gap-1">
                     {job.required_skills?.map((sk, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded text-[11px] font-medium bg-secondary text-foreground border border-border"
+                        className="px-2 py-0.5 rounded text-[11px] font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
                       >
                         {sk}
                       </span>
@@ -270,18 +272,18 @@ export const JobsPage: React.FC = () => {
               </div>
 
               {/* Card Footer */}
-              <div className="pt-4 border-t border-border flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                  <Users className="w-4 h-4 text-primary" />
+              <div className="pt-4 border-t border-black/10 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-xs text-neutral-600 font-mono">
+                  <Users className="w-3.5 h-3.5 text-neutral-800" />
                   <span>{job.candidates_count || 0} Applicants</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Link
                     to={`/jobs/${job.id}/rankings`}
-                    className="px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-xs flex items-center gap-1 transition-colors"
+                    className="air-button-light text-xs py-1 px-2.5 flex items-center gap-1"
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
+                    <Sparkles className="w-3 h-3 text-[#2b7fff]" />
                     <span>Rankings</span>
                   </Link>
 
@@ -289,14 +291,14 @@ export const JobsPage: React.FC = () => {
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => handleOpenEdit(job)}
-                        className="p-1.5 rounded-lg text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                        className="p-1.5 rounded text-neutral-500 hover:text-black hover:bg-black/5 transition-colors"
                         title="Edit Job"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => handleDeleteJob(job.id)}
-                        className="p-1.5 rounded-lg text-muted-foreground hover:bg-rose-500/10 hover:text-rose-500 transition-colors"
+                        className="p-1.5 rounded text-neutral-500 hover:text-black hover:bg-black/5 transition-colors"
                         title="Delete Job"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -310,10 +312,10 @@ export const JobsPage: React.FC = () => {
         </div>
 
         {jobs.length === 0 && !isLoading && (
-          <div className="py-16 text-center rounded-2xl border border-dashed border-border p-8 space-y-3">
-            <Briefcase className="w-10 h-10 text-muted-foreground mx-auto" />
-            <h4 className="text-base font-semibold text-foreground">No job openings found</h4>
-            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+          <div className="py-16 text-center rounded-xl border border-dashed border-white/15 p-8 space-y-3">
+            <Briefcase className="w-8 h-8 text-neutral-500 mx-auto" />
+            <h4 className="text-base font-semibold text-white">No job openings found</h4>
+            <p className="text-xs text-neutral-400 max-w-sm mx-auto">
               Create your first job requisition to start matching candidates with AI recommendations.
             </p>
           </div>
@@ -330,54 +332,54 @@ export const JobsPage: React.FC = () => {
       >
         <form onSubmit={handleSaveJob} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-lg bg-rose-500/10 text-rose-500 text-xs border border-rose-500/20">
+            <div className="p-3 rounded-lg bg-red-50 text-red-700 text-xs border border-red-200">
               {error}
             </div>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Job Title *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Job Title *</label>
               <input
                 type="text"
                 required
                 value={formData.title}
                 onChange={e => setFormData({ ...formData, title: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                className="air-input text-xs"
                 placeholder="e.g. Senior Machine Learning Engineer"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Department *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Department *</label>
               <input
                 type="text"
                 required
                 value={formData.department}
                 onChange={e => setFormData({ ...formData, department: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                className="air-input text-xs"
                 placeholder="e.g. Engineering"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Location *</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Location *</label>
               <input
                 type="text"
                 required
                 value={formData.location}
                 onChange={e => setFormData({ ...formData, location: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                className="air-input text-xs"
                 placeholder="e.g. San Francisco, CA (Remote)"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Employment Type</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Employment Type</label>
               <select
                 value={formData.employment_type}
                 onChange={e => setFormData({ ...formData, employment_type: e.target.value as EmploymentType })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+                className="air-input text-xs"
               >
                 <option value="FULL_TIME">Full-Time</option>
                 <option value="PART_TIME">Part-Time</option>
@@ -389,27 +391,27 @@ export const JobsPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">Job Description *</label>
+            <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Job Description *</label>
             <textarea
               required
               rows={4}
               value={formData.description}
               onChange={e => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="air-input text-xs"
               placeholder="Detail responsibilities, mission, and day-to-day requirements..."
             />
           </div>
 
           {/* Required Skills Tag Input */}
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">
+            <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">
               Mandatory Required Skills (40% default match weight)
             </label>
-            <div className="flex flex-wrap gap-1 p-2 rounded-lg border border-border bg-secondary/20 mb-2">
+            <div className="flex flex-wrap gap-1 p-2 rounded-lg border border-black/10 bg-white mb-2">
               {formData.required_skills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
                 >
                   {skill}
                   <button
@@ -442,21 +444,21 @@ export const JobsPage: React.FC = () => {
                   }
                 }}
                 placeholder="Type skill & press Enter (e.g. Python, React, PostgreSQL)..."
-                className="flex-1 px-3 py-1.5 text-xs rounded-lg border border-input bg-background"
+                className="air-input text-xs"
               />
             </div>
           </div>
 
           {/* Preferred Skills Tag Input */}
           <div>
-            <label className="block text-xs font-medium text-foreground mb-1">
+            <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">
               Preferred / Bonus Skills (15% default match weight)
             </label>
-            <div className="flex flex-wrap gap-1 p-2 rounded-lg border border-border bg-secondary/20 mb-2">
+            <div className="flex flex-wrap gap-1 p-2 rounded-lg border border-black/10 bg-white mb-2">
               {formData.preferred_skills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-medium bg-cyan-500/10 text-cyan-500 border border-cyan-500/20"
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
                 >
                   {skill}
                   <button
@@ -489,30 +491,30 @@ export const JobsPage: React.FC = () => {
                   }
                 }}
                 placeholder="Type bonus skill & press Enter (e.g. Docker, AWS, Redis)..."
-                className="flex-1 px-3 py-1.5 text-xs rounded-lg border border-input bg-background"
+                className="air-input text-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Min Experience (Years)</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Min Experience (Years)</label>
               <input
                 type="number"
                 step="0.5"
                 min="0"
                 value={formData.min_experience_years}
                 onChange={e => setFormData({ ...formData, min_experience_years: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background"
+                className="air-input text-xs"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">Status</label>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Status</label>
               <select
                 value={formData.status}
                 onChange={e => setFormData({ ...formData, status: e.target.value as JobStatus })}
-                className="w-full px-3 py-2 text-xs rounded-lg border border-input bg-background text-foreground"
+                className="air-input text-xs"
               >
                 <option value="ACTIVE">Active (Accepting)</option>
                 <option value="DRAFT">Draft</option>
@@ -523,12 +525,12 @@ export const JobsPage: React.FC = () => {
           </div>
 
           {/* AI Matching Weights Config */}
-          <div className="p-3 rounded-xl bg-secondary/40 border border-border space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
-              <Sliders className="w-4 h-4 text-primary" />
+          <div className="p-3.5 rounded-lg bg-white border border-black/10 space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#1b1b1b] uppercase">
+              <Sliders className="w-4 h-4 text-[#2b7fff]" />
               <span>AI Candidate Matching Weights</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-neutral-600 font-mono">
               <div>
                 <label className="block text-[10px]">Required Skills</label>
                 <input
@@ -541,7 +543,7 @@ export const JobsPage: React.FC = () => {
                     ...formData,
                     matching_weights: { ...formData.matching_weights, required_skills: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-2 py-1 text-xs rounded border border-input bg-background"
+                  className="air-input text-xs py-1 px-2"
                 />
               </div>
               <div>
@@ -556,7 +558,7 @@ export const JobsPage: React.FC = () => {
                     ...formData,
                     matching_weights: { ...formData.matching_weights, semantic_similarity: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-2 py-1 text-xs rounded border border-input bg-background"
+                  className="air-input text-xs py-1 px-2"
                 />
               </div>
               <div>
@@ -571,7 +573,7 @@ export const JobsPage: React.FC = () => {
                     ...formData,
                     matching_weights: { ...formData.matching_weights, preferred_skills: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-2 py-1 text-xs rounded border border-input bg-background"
+                  className="air-input text-xs py-1 px-2"
                 />
               </div>
               <div>
@@ -586,24 +588,24 @@ export const JobsPage: React.FC = () => {
                     ...formData,
                     matching_weights: { ...formData.matching_weights, experience_alignment: parseFloat(e.target.value) || 0 }
                   })}
-                  className="w-full px-2 py-1 text-xs rounded border border-input bg-background"
+                  className="air-input text-xs py-1 px-2"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-black/10">
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(false)}
-              className="px-4 py-2 text-xs font-medium rounded-lg border border-border hover:bg-secondary"
+              className="air-button-light"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5 disabled:opacity-50"
+              className="bg-[#1b1b1b] text-white hover:bg-black rounded-lg px-4 py-2 font-medium flex items-center gap-1.5 disabled:opacity-50 text-xs"
             >
               {isSubmitting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
               <span>{editingJob ? 'Update Job' : 'Publish Opening'}</span>

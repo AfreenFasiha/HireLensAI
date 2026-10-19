@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
-  GitPullRequest,
-  Filter,
   Sparkles,
   ChevronRight,
   ChevronLeft,
   Clock,
   History,
-  CheckCircle2,
-  XCircle,
-  Calendar,
   AlertCircle
 } from 'lucide-react';
 import { Topbar } from '../components/Topbar';
@@ -18,13 +13,13 @@ import { ScoreBadge } from '../components/ScoreBadge';
 import { api } from '../services/api';
 import type { Application, Job, ApplicationStage } from '../types';
 
-const PIPELINE_COLUMNS: Array<{ stage: ApplicationStage; title: string; color: string }> = [
-  { stage: 'APPLIED', title: 'Applied', color: 'border-indigo-500/50' },
-  { stage: 'SCREENING', title: 'Screening', color: 'border-purple-500/50' },
-  { stage: 'SHORTLISTED', title: 'Shortlisted', color: 'border-cyan-500/50' },
-  { stage: 'INTERVIEW', title: 'Interview', color: 'border-amber-500/50' },
-  { stage: 'OFFER', title: 'Offer', color: 'border-emerald-500/50' },
-  { stage: 'HIRED', title: 'Hired', color: 'border-green-500/50' },
+const PIPELINE_COLUMNS: Array<{ stage: ApplicationStage; title: string }> = [
+  { stage: 'APPLIED', title: 'Applied' },
+  { stage: 'SCREENING', title: 'Screening' },
+  { stage: 'SHORTLISTED', title: 'Shortlisted' },
+  { stage: 'INTERVIEW', title: 'Interview' },
+  { stage: 'OFFER', title: 'Offer' },
+  { stage: 'HIRED', title: 'Hired' },
 ];
 
 export const PipelinePage: React.FC = () => {
@@ -86,17 +81,17 @@ export const PipelinePage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#000000] text-white">
       <Topbar
         title="Hiring Pipeline"
         subtitle="Visual Kanban stage workflow with persistent state tracking and history audit."
         actions={
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground font-medium hidden sm:inline">Job Filter:</span>
+            <span className="text-xs text-neutral-400 font-mono hidden sm:inline uppercase">Position:</span>
             <select
               value={selectedJobId}
               onChange={(e) => setSelectedJobId(e.target.value)}
-              className="text-xs py-1.5 px-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+              className="text-xs py-1.5 px-3 rounded border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
             >
               <option value="">All Job Positions</option>
               {jobs.map((j) => (
@@ -110,7 +105,7 @@ export const PipelinePage: React.FC = () => {
       />
 
       {/* Kanban Board Container */}
-      <div className="p-8 flex-1 overflow-x-auto">
+      <div className="p-6 lg:p-8 flex-1 overflow-x-auto">
         <div className="flex gap-4 min-w-[1200px] h-[calc(100vh-10rem)]">
           {PIPELINE_COLUMNS.map((col, colIdx) => {
             const colApps = applications.filter((a) => a.stage === col.stage);
@@ -118,41 +113,41 @@ export const PipelinePage: React.FC = () => {
             return (
               <div
                 key={col.stage}
-                className="flex-1 flex flex-col rounded-2xl border border-border bg-card/40 backdrop-blur-sm p-4 overflow-hidden"
+                className="flex-1 flex flex-col rounded-[12px] border border-white/10 bg-white/[0.02] p-4 overflow-hidden"
               >
-                {/* Column Header */}
-                <div className={`flex items-center justify-between pb-3 mb-3 border-b-2 ${col.color}`}>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-foreground">{col.title}</span>
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[11px] font-mono font-bold text-muted-foreground">
-                      {colApps.length}
-                    </span>
-                  </div>
+                {/* Monochrome Column Header */}
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                  <span className="text-xs font-semibold tracking-wider uppercase font-mono text-white">
+                    {col.title}
+                  </span>
+                  <span className="flex h-5 px-1.5 items-center justify-center rounded bg-white/10 text-[10px] font-mono font-bold text-neutral-300">
+                    {colApps.length}
+                  </span>
                 </div>
 
-                {/* Candidate Cards Column */}
+                {/* Off-White Candidate Cards Column */}
                 <div className="flex-1 overflow-y-auto space-y-3 pr-1">
                   {colApps.map((app) => (
                     <div
                       key={app.id}
-                      className="p-4 rounded-xl border border-border bg-card shadow-sm hover:border-primary/50 hover:shadow-md transition-all space-y-3 cursor-pointer group"
+                      className="p-4 rounded-[10px] border border-black/5 bg-[#f5f5f5] text-[#1b1b1b] shadow-none hover:border-black/20 transition-all space-y-3 cursor-pointer group"
                       onClick={() => handleOpenDetails(app)}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>
-                          <h4 className="font-bold text-foreground text-sm group-hover:text-primary transition-colors">
+                          <h4 className="font-bold text-[#1b1b1b] text-sm group-hover:text-[#2b7fff] transition-colors">
                             {app.candidate_name}
                           </h4>
-                          <p className="text-[11px] text-muted-foreground line-clamp-1">{app.job_title}</p>
+                          <p className="text-[11px] text-neutral-500 line-clamp-1">{app.job_title}</p>
                         </div>
                         {app.match_score && (
                           <ScoreBadge score={app.match_score.overall_score} size="sm" />
                         )}
                       </div>
 
-                      <div className="flex items-center justify-between text-[10px] text-muted-foreground pt-1 border-t border-border">
+                      <div className="flex items-center justify-between text-[10px] text-neutral-500 font-mono pt-2 border-t border-black/10">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-3 h-3 text-neutral-400" />
                           {new Date(app.applied_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                         </span>
 
@@ -162,7 +157,7 @@ export const PipelinePage: React.FC = () => {
                             <button
                               onClick={() => handleStageChange(app.id, PIPELINE_COLUMNS[colIdx - 1].stage)}
                               title={`Move back to ${PIPELINE_COLUMNS[colIdx - 1].title}`}
-                              className="p-1 rounded bg-secondary hover:bg-secondary/80 text-foreground transition-colors"
+                              className="p-1 rounded bg-black/5 hover:bg-black/15 text-[#1b1b1b] transition-colors"
                             >
                               <ChevronLeft className="w-3 h-3" />
                             </button>
@@ -171,7 +166,7 @@ export const PipelinePage: React.FC = () => {
                             <button
                               onClick={() => handleStageChange(app.id, PIPELINE_COLUMNS[colIdx + 1].stage)}
                               title={`Advance to ${PIPELINE_COLUMNS[colIdx + 1].title}`}
-                              className="p-1 rounded bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                              className="p-1 rounded bg-[#1b1b1b] text-white hover:bg-black transition-colors"
                             >
                               <ChevronRight className="w-3 h-3" />
                             </button>
@@ -182,7 +177,7 @@ export const PipelinePage: React.FC = () => {
                   ))}
 
                   {colApps.length === 0 && (
-                    <div className="py-8 text-center text-xs text-muted-foreground/60 border border-dashed border-border/50 rounded-xl">
+                    <div className="py-8 text-center text-xs text-neutral-500 font-mono border border-dashed border-white/10 rounded-lg">
                       Empty stage
                     </div>
                   )}
@@ -204,20 +199,20 @@ export const PipelinePage: React.FC = () => {
         >
           <div className="space-y-6">
             {/* Header info */}
-            <div className="flex flex-wrap items-center justify-between p-4 rounded-xl bg-secondary/40 border border-border gap-4">
+            <div className="flex flex-wrap items-center justify-between p-4 rounded-lg bg-white border border-black/10 gap-4">
               <div>
-                <span className="text-xs text-muted-foreground block">Current Stage</span>
-                <span className="text-sm font-bold text-foreground">{selectedApp.stage}</span>
+                <span className="text-xs text-neutral-500 font-mono block">Current Stage</span>
+                <span className="text-sm font-bold text-[#1b1b1b]">{selectedApp.stage}</span>
               </div>
               <div>
-                <span className="text-xs text-muted-foreground block">Applied On</span>
-                <span className="text-xs font-semibold text-foreground font-mono">
+                <span className="text-xs text-neutral-500 font-mono block">Applied On</span>
+                <span className="text-xs font-semibold text-[#1b1b1b] font-mono">
                   {new Date(selectedApp.applied_at).toLocaleString()}
                 </span>
               </div>
               {selectedApp.match_score && (
                 <div>
-                  <span className="text-xs text-muted-foreground block">AI Match Score</span>
+                  <span className="text-xs text-neutral-500 font-mono block">AI Match Score</span>
                   <ScoreBadge score={selectedApp.match_score.overall_score} size="md" />
                 </div>
               )}
@@ -225,12 +220,12 @@ export const PipelinePage: React.FC = () => {
 
             {/* Score Explanation */}
             {selectedApp.match_score && (
-              <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-xs space-y-1">
-                <span className="font-bold text-foreground flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <div className="p-4 rounded-lg border border-black/10 bg-white text-xs space-y-1">
+                <span className="font-bold text-[#1b1b1b] flex items-center gap-1.5 font-mono">
+                  <Sparkles className="w-3.5 h-3.5 text-[#2b7fff]" />
                   Score Rationale
                 </span>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-neutral-600 leading-relaxed">
                   {selectedApp.match_score.score_explanation}
                 </p>
               </div>
@@ -238,22 +233,22 @@ export const PipelinePage: React.FC = () => {
 
             {/* Stage Transition History */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-foreground uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-                <History className="w-3.5 h-3.5 text-primary" />
+              <h4 className="text-xs font-bold text-[#1b1b1b] uppercase font-mono tracking-wider flex items-center gap-1.5">
+                <History className="w-3.5 h-3.5 text-neutral-700" />
                 Stage Transition Audit Log
               </h4>
 
               <div className="space-y-2 max-h-56 overflow-y-auto">
                 {selectedApp.stage_history?.map((hist: any) => (
-                  <div key={hist.id} className="p-3 rounded-lg bg-secondary/30 border border-border text-xs flex items-start justify-between">
+                  <div key={hist.id} className="p-3 rounded-lg bg-white border border-black/10 text-xs flex items-start justify-between">
                     <div>
-                      <p className="font-semibold text-foreground">
-                        {hist.from_stage} → <span className="text-primary">{hist.to_stage}</span>
+                      <p className="font-semibold text-[#1b1b1b]">
+                        {hist.from_stage} → <span className="text-[#2b7fff]">{hist.to_stage}</span>
                       </p>
-                      <p className="text-muted-foreground text-[11px] mt-0.5">{hist.reason || 'Stage updated'}</p>
+                      <p className="text-neutral-500 text-[11px] mt-0.5">{hist.reason || 'Stage updated'}</p>
                     </div>
-                    <div className="text-right text-[10px] text-muted-foreground">
-                      <p className="font-medium text-foreground">{hist.changed_by_name || 'System'}</p>
+                    <div className="text-right text-[10px] text-neutral-500 font-mono">
+                      <p className="font-medium text-[#1b1b1b]">{hist.changed_by_name || 'System'}</p>
                       <p>{new Date(hist.created_at).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                     </div>
                   </div>
@@ -262,8 +257,8 @@ export const PipelinePage: React.FC = () => {
             </div>
 
             {/* Fast Stage Transition Actions */}
-            <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-3">
-              <span className="text-xs font-medium text-muted-foreground">Transition stage to:</span>
+            <div className="pt-4 border-t border-black/10 flex flex-wrap items-center justify-between gap-3">
+              <span className="text-xs font-medium text-neutral-600 font-mono">Transition stage:</span>
               <div className="flex flex-wrap gap-1.5">
                 {PIPELINE_COLUMNS.map((col) => (
                   <button
@@ -275,8 +270,8 @@ export const PipelinePage: React.FC = () => {
                     }}
                     className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors ${
                       selectedApp.stage === col.stage
-                        ? 'bg-primary text-primary-foreground opacity-50 cursor-not-allowed'
-                        : 'bg-secondary hover:bg-secondary/80 text-foreground border border-border'
+                        ? 'bg-black text-white opacity-50 cursor-not-allowed'
+                        : 'air-button-light'
                     }`}
                   >
                     {col.title}

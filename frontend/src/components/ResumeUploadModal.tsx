@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UploadCloud, FileText, CheckCircle2, AlertTriangle, Loader2, Sparkles, Plus, X } from 'lucide-react';
+import { UploadCloud, FileText, CheckCircle2, AlertTriangle, Loader2, Plus, X } from 'lucide-react';
 import { Modal } from './Modal';
 import { api } from '../services/api';
 import type { ParsedResumeData } from '../types';
@@ -151,7 +151,7 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
     >
       <div className="space-y-5">
         {error && (
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-sm">
+          <div className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -159,12 +159,12 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
 
         {/* Upload Zone */}
         {!file && (
-          <label className="border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-primary/60 transition-colors bg-secondary/30">
-            <div className="p-3 bg-primary/10 rounded-full text-primary mb-3">
+          <label className="border border-dashed border-black/20 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-black/50 transition-colors bg-white/50">
+            <div className="p-3 bg-black/5 rounded-full text-[#1b1b1b] mb-3">
               <UploadCloud className="w-8 h-8" />
             </div>
-            <p className="text-sm font-medium text-foreground">Click to upload or drag and drop</p>
-            <p className="text-xs text-muted-foreground mt-1">PDF or DOCX documents (up to 10MB)</p>
+            <p className="text-sm font-medium text-[#1b1b1b]">Click to upload or drag and drop</p>
+            <p className="text-xs text-neutral-500 mt-1">PDF or DOCX documents (up to 10MB)</p>
             <input
               type="file"
               accept=".pdf,.docx,.doc"
@@ -181,10 +181,10 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
         {/* Parsing Progress */}
         {isParsing && (
           <div className="flex flex-col items-center justify-center py-8 text-center space-y-3">
-            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#1b1b1b] animate-spin" />
             <div>
-              <p className="text-sm font-semibold text-foreground">Extracting resume text & skills...</p>
-              <p className="text-xs text-muted-foreground">Running NLP entity normalization and taxonomy checks</p>
+              <p className="text-sm font-semibold text-[#1b1b1b]">Extracting resume text & skills...</p>
+              <p className="text-xs text-neutral-500">Running NLP entity normalization and taxonomy checks</p>
             </div>
           </div>
         )}
@@ -192,26 +192,26 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
         {/* Review & Verification Step */}
         {file && !isParsing && parsedData && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 border border-border">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white border border-black/10">
               <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
+                <FileText className="w-5 h-5 text-[#1b1b1b]" />
                 <div>
-                  <p className="text-sm font-medium text-foreground">{file.name}</p>
-                  <p className="text-xs text-muted-foreground">{(file.size / 1024).toFixed(1)} KB</p>
+                  <p className="text-sm font-medium text-[#1b1b1b]">{file.name}</p>
+                  <p className="text-xs text-neutral-500">{(file.size / 1024).toFixed(1)} KB</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleReset}
-                className="text-xs text-muted-foreground hover:text-rose-500 font-medium"
+                className="text-xs text-neutral-500 hover:text-black font-medium underline"
               >
                 Change File
               </button>
             </div>
 
             {parsedData.uncertain_fields && parsedData.uncertain_fields.length > 0 && (
-              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 shrink-0" />
+              <div className="p-3 rounded-lg bg-black/5 border border-black/10 text-neutral-700 text-xs flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 shrink-0 text-[#2b7fff]" />
                 <span>
                   <strong>Review Notice:</strong> Please verify {parsedData.uncertain_fields.join(', ')} before saving.
                 </span>
@@ -220,67 +220,67 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Full Name *</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Full Name *</label>
                 <input
                   type="text"
                   value={formData.full_name}
                   onChange={e => setFormData({ ...formData, full_name: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                   placeholder="e.g. Maya Lin"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Email Address *</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Email Address *</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                   placeholder="e.g. maya@example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Phone Number</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={formData.phone}
                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                   placeholder="+1 (555) 0123"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Current Job Title</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Current Job Title</label>
                 <input
                   type="text"
                   value={formData.current_title}
                   onChange={e => setFormData({ ...formData, current_title: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                   placeholder="e.g. Senior Software Engineer"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Years of Experience</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Years of Experience</label>
                 <input
                   type="number"
                   step="0.5"
                   value={formData.experience_years}
                   onChange={e => setFormData({ ...formData, experience_years: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-foreground mb-1">Education Level</label>
+                <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">Education Level</label>
                 <input
                   type="text"
                   value={formData.education_level}
                   onChange={e => setFormData({ ...formData, education_level: e.target.value })}
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input"
                   placeholder="e.g. Bachelor's Degree"
                 />
               </div>
@@ -288,20 +288,20 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
 
             {/* Extracted Skills */}
             <div>
-              <label className="block text-xs font-medium text-foreground mb-1">
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1">
                 Extracted Skills ({formData.skills.length})
               </label>
-              <div className="flex flex-wrap gap-1.5 p-3 rounded-lg border border-border bg-secondary/20 min-h-[50px] mb-2">
+              <div className="flex flex-wrap gap-1.5 p-3 rounded-lg border border-black/10 bg-white min-h-[50px] mb-2">
                 {formData.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/5 text-[#1b1b1b] border border-black/10"
                   >
                     {skill}
                     <button
                       type="button"
                       onClick={() => handleRemoveSkill(skill)}
-                      className="hover:text-rose-500 focus:outline-none"
+                      className="hover:text-black opacity-60 hover:opacity-100 focus:outline-none"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -320,12 +320,12 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
                     }
                   }}
                   placeholder="Add another skill..."
-                  className="flex-1 px-3 py-1.5 text-xs rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="air-input text-xs"
                 />
                 <button
                   type="button"
                   onClick={handleAddSkill}
-                  className="px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary text-foreground hover:bg-secondary/80 flex items-center gap-1"
+                  className="air-button-light text-xs shrink-0"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Add
@@ -334,11 +334,11 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-black/10">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-sm font-medium rounded-lg border border-border hover:bg-secondary transition-colors"
+                className="air-button-light"
               >
                 Cancel
               </button>
@@ -346,7 +346,7 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
                 type="button"
                 onClick={handleSaveAuthoritative}
                 disabled={isSaving}
-                className="px-4 py-2 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 transition-colors disabled:opacity-50"
+                className="bg-[#1b1b1b] text-white hover:bg-black rounded-lg px-4 py-2 font-medium flex items-center gap-2 transition-colors disabled:opacity-50"
               >
                 {isSaving ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
