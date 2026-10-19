@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+
+# Node & Frontend
+node_modules/
+.pnp
+.pnp.js
+coverage/
+dist/
+build/
+*.tsbuildinfo
+.vite/
+
+# Database & Uploads
+*.db
+*.db*
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+backend/hirelens.db*
+backend/test_hirelens.db*
+uploads/*
+!uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Antigravity artifacts
+.gemini/
