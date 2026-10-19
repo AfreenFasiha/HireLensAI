@@ -46,24 +46,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
       {mobileOpen && (
         <div
           onClick={onMobileClose}
-          className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/80 backdrop-blur-md lg:hidden"
         />
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#000000] border-r border-white/10 flex flex-col h-screen select-none transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#08080a] border-r border-white/10 flex flex-col h-screen select-none transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static backdrop-blur-xl ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Brand Header (72px desktop) */}
+        {/* Brand Header (72px desktop) with glossy reflection */}
         <div className="h-[72px] px-6 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 border border-white/20 text-white font-bold">
-              <Sparkles className="w-4 h-4 text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-b from-white/20 to-white/5 border border-white/25 text-white font-bold shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_8px_rgba(0,0,0,0.3)]">
+              <Sparkles className="w-4 h-4 text-[#bae6fd]" />
             </div>
             <div className="flex flex-col">
               <span className="font-semibold tracking-wider text-white text-sm uppercase">HireLens AI</span>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-neutral-400">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-[#bae6fd]/80">
                 {user?.organization_name || 'Enterprise'}
               </span>
             </div>
@@ -93,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-white/[0.08] text-white border-l-2 border-white pl-[10px] font-semibold'
+                      ? 'bg-gradient-to-r from-white/[0.12] to-white/[0.04] text-white border-l-2 border-[#bae6fd] pl-[10px] font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]'
                       : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
                   }`
                 }
@@ -105,11 +105,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
           })}
         </div>
 
-        {/* User Footer */}
+        {/* User Footer with pastel initial tag */}
         <div className="p-3 border-t border-white/10 mt-auto">
-          <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
             <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-white/10 text-white font-mono text-xs uppercase border border-white/20">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#ede9fe] text-[#6d28d9] font-mono text-xs font-bold uppercase border border-[#ddd6fe] shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)]">
                 {user?.full_name ? user.full_name[0] : 'U'}
               </div>
               <div className="truncate">
@@ -120,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
             <button
               onClick={handleLogout}
               title="Log Out"
-              className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
             >
               <LogOut className="w-4 h-4" />
             </button>

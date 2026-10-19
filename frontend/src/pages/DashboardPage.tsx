@@ -111,43 +111,49 @@ export const DashboardPage: React.FC = () => {
           <p className="text-xs text-neutral-500 font-mono">Live PostgreSQL Stream</p>
         </div>
 
-        {/* 6 Metric KPI Cards (air-card off-white) */}
+        {/* 6 Metric KPI Cards with Pastel Colors and Glossy Structure */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           <MetricCard
             title="Candidates"
             value={analytics?.overview?.total_candidates ?? 0}
             subtitle="Talent records"
             icon={Users}
+            pastelColor="sky"
           />
           <MetricCard
             title="Active Jobs"
             value={analytics?.overview?.active_job_openings ?? 0}
             subtitle="Open requisitions"
             icon={Briefcase}
+            pastelColor="mint"
           />
           <MetricCard
             title="Interviews"
             value={analytics?.overview?.interviews_scheduled ?? 0}
             subtitle="Scheduled sessions"
             icon={Calendar}
+            pastelColor="lavender"
           />
           <MetricCard
             title="Shortlisted"
             value={analytics?.overview?.candidates_shortlisted ?? 0}
             subtitle="Qualified applicants"
             icon={CheckCircle2}
+            pastelColor="sage"
           />
           <MetricCard
             title="Monthly Apps"
             value={analytics?.overview?.applications_this_month ?? 0}
             subtitle="Submissions"
             icon={TrendingUp}
+            pastelColor="peach"
           />
           <MetricCard
             title="Match Avg"
             value={`${analytics?.overview?.average_match_score ?? 0}%`}
             subtitle="Explainable rating"
             icon={Sparkles}
+            pastelColor="butter"
           />
         </div>
 
@@ -160,7 +166,7 @@ export const DashboardPage: React.FC = () => {
                 <h3 className="text-base font-bold text-[#1b1b1b]">Application Activity Volume</h3>
                 <p className="text-xs text-neutral-500">Applicant submissions across selected timeframe</p>
               </div>
-              <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded bg-black/5 text-[#1b1b1b] border border-black/10">
+              <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#dcfce7] text-[#15803d] border border-[#bbf7d0] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                 Synchronized
               </span>
             </div>
@@ -171,8 +177,8 @@ export const DashboardPage: React.FC = () => {
                   <AreaChart data={analytics.applications_trend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="airAppTrend" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#426188" stopOpacity={0.25} />
-                        <stop offset="95%" stopColor="#426188" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor="#bae6fd" stopOpacity={0.45} />
+                        <stop offset="95%" stopColor="#bae6fd" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
                     <XAxis
@@ -195,14 +201,14 @@ export const DashboardPage: React.FC = () => {
                         borderRadius: '8px',
                         fontSize: '12px',
                         color: '#1b1b1b',
-                        boxShadow: 'none'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="applications"
-                      stroke="#426188"
-                      strokeWidth={2}
+                      stroke="#0284c7"
+                      strokeWidth={2.5}
                       fillOpacity={1}
                       fill="url(#airAppTrend)"
                     />
@@ -223,7 +229,7 @@ export const DashboardPage: React.FC = () => {
                 <h3 className="text-base font-bold text-[#1b1b1b]">Pipeline Stages</h3>
                 <p className="text-xs text-neutral-500">Applicant status breakdown</p>
               </div>
-              <Link to="/pipeline" className="text-xs text-[#2b7fff] hover:underline font-medium font-mono flex items-center gap-1">
+              <Link to="/pipeline" className="text-xs text-[#0369a1] hover:underline font-semibold font-mono flex items-center gap-1">
                 Kanban <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
@@ -248,10 +254,10 @@ export const DashboardPage: React.FC = () => {
                         borderRadius: '8px',
                         fontSize: '12px',
                         color: '#1b1b1b',
-                        boxShadow: 'none'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
                       }}
                     />
-                    <Bar dataKey="count" fill="#1b1b1b" radius={[0, 4, 4, 0]} />
+                    <Bar dataKey="count" fill="#818cf8" radius={[0, 4, 4, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               )}

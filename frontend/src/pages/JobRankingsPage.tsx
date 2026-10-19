@@ -77,13 +77,16 @@ export const JobRankingsPage: React.FC = () => {
 
       <div className="p-6 lg:p-8 space-y-8 flex-1 max-w-[1150px] w-full mx-auto">
         {/* Ethical AI Notice Banner */}
-        <div className="air-card flex items-start gap-4">
-          <div className="p-2 rounded bg-black/5 text-[#1b1b1b] mt-0.5 shrink-0">
-            <Sparkles className="w-5 h-5 text-[#2b7fff]" />
+        <div className="air-card flex items-start gap-4 bg-gradient-to-r from-[#f0f9ff]/90 via-white to-[#f5f3ff]/90 border-t-white border-[#e0e7ff]">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-[#e0f2fe] to-[#ede9fe] text-[#0369a1] mt-0.5 shrink-0 border border-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.9)]">
+            <Sparkles className="w-5 h-5 text-[#0284c7]" />
           </div>
           <div className="space-y-1">
-            <h4 className="text-sm font-bold text-[#1b1b1b] font-mono uppercase tracking-wider">
-              Human-in-the-Loop Decision Support Notice
+            <h4 className="text-sm font-bold text-[#1b1b1b] font-mono uppercase tracking-wider flex items-center gap-2">
+              <span>Human-in-the-Loop Decision Support Notice</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#e0f2fe] text-[#0369a1] border border-[#bae6fd]">
+                Explainable AI
+              </span>
             </h4>
             <p className="text-xs text-neutral-600 leading-relaxed">
               {rankings?.advisory_notice ||
@@ -93,14 +96,14 @@ export const JobRankingsPage: React.FC = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="flex flex-wrap items-center justify-between p-4 rounded-lg border border-white/10 bg-white/[0.03] gap-4">
+        <div className="flex flex-wrap items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] gap-4">
           <div className="flex items-center gap-3">
             <Filter className="w-4 h-4 text-neutral-400" />
             <span className="text-xs font-mono uppercase text-neutral-300">Filter Stage:</span>
             <select
               value={stageFilter}
               onChange={(e) => setStageFilter(e.target.value)}
-              className="text-xs py-1.5 px-3 rounded border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
+              className="text-xs py-1.5 px-3 rounded-lg border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
             >
               <option value="">All Stages</option>
               <option value="APPLIED">Applied</option>
@@ -127,20 +130,20 @@ export const JobRankingsPage: React.FC = () => {
               <div
                 key={cand.application_id}
                 className={`air-card transition-all ${
-                  isExpanded ? 'ring-2 ring-[#2b7fff]/40' : ''
+                  isExpanded ? 'ring-2 ring-[#38bdf8]/50 shadow-[0_8px_30px_rgba(56,189,248,0.15)]' : ''
                 }`}
               >
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   {/* Left: Rank & Candidate Details */}
                   <div className="flex items-center gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-black/5 font-mono font-bold text-sm text-[#1b1b1b] border border-black/10">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-white to-neutral-100 font-mono font-bold text-sm text-[#1b1b1b] border-t border-t-white border-black/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_4px_rgba(0,0,0,0.06)]">
                       #{index + 1}
                     </span>
                     <div>
                       <div className="flex items-center gap-2.5">
                         <Link
                           to="/candidates"
-                          className="font-bold text-base text-[#1b1b1b] hover:text-[#2b7fff] transition-colors"
+                          className="font-bold text-base text-[#1b1b1b] hover:text-[#0284c7] transition-colors"
                         >
                           {cand.candidate_name}
                         </Link>
@@ -163,7 +166,7 @@ export const JobRankingsPage: React.FC = () => {
                       {cand.stage !== 'SHORTLISTED' && cand.stage !== 'OFFER' && cand.stage !== 'HIRED' && (
                         <button
                           onClick={() => handleAdvanceStage(cand.application_id, 'SHORTLISTED' as ApplicationStage)}
-                          className="px-3 py-1.5 rounded-lg bg-[#1b1b1b] text-white hover:bg-black font-medium text-xs flex items-center gap-1 transition-colors"
+                          className="px-3 py-1.5 rounded-lg bg-gradient-to-b from-[#1b1b1b] to-black text-white hover:opacity-90 font-medium text-xs flex items-center gap-1 transition-all border-t border-t-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_6px_rgba(0,0,0,0.3)]"
                         >
                           <Check className="w-3.5 h-3.5" />
                           <span>Shortlist</span>
@@ -181,16 +184,16 @@ export const JobRankingsPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Score Breakdown Bars (Minimal progress indicators) */}
+                {/* Score Breakdown Bars (Pastel progress indicators) */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 pt-4 border-t border-black/10">
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[11px] font-mono">
                       <span className="text-neutral-500">Required (40%)</span>
-                      <span className="font-bold text-[#1b1b1b]">{cand.required_skills_score}%</span>
+                      <span className="font-bold text-[#15803d]">{cand.required_skills_score}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-neutral-200/80 rounded-full overflow-hidden shadow-inner p-0.5">
                       <div
-                        className="h-full bg-[#1b1b1b] rounded-full"
+                        className="h-full bg-gradient-to-r from-[#86efac] to-[#15803d] rounded-full shadow-[0_0_8px_rgba(34,197,94,0.35)] transition-all duration-500"
                         style={{ width: `${Math.min(cand.required_skills_score, 100)}%` }}
                       />
                     </div>
@@ -199,11 +202,11 @@ export const JobRankingsPage: React.FC = () => {
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[11px] font-mono">
                       <span className="text-neutral-500">Semantic (30%)</span>
-                      <span className="font-bold text-[#1b1b1b]">{cand.semantic_similarity_score}%</span>
+                      <span className="font-bold text-[#0369a1]">{cand.semantic_similarity_score}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-neutral-200/80 rounded-full overflow-hidden shadow-inner p-0.5">
                       <div
-                        className="h-full bg-[#426188] rounded-full"
+                        className="h-full bg-gradient-to-r from-[#7dd3fc] to-[#0284c7] rounded-full shadow-[0_0_8px_rgba(56,189,248,0.35)] transition-all duration-500"
                         style={{ width: `${Math.min(cand.semantic_similarity_score, 100)}%` }}
                       />
                     </div>
@@ -212,11 +215,11 @@ export const JobRankingsPage: React.FC = () => {
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[11px] font-mono">
                       <span className="text-neutral-500">Preferred (15%)</span>
-                      <span className="font-bold text-[#1b1b1b]">{cand.preferred_skills_score}%</span>
+                      <span className="font-bold text-[#6d28d9]">{cand.preferred_skills_score}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-neutral-200/80 rounded-full overflow-hidden shadow-inner p-0.5">
                       <div
-                        className="h-full bg-[#426188] rounded-full"
+                        className="h-full bg-gradient-to-r from-[#c4b5fd] to-[#7c3aed] rounded-full shadow-[0_0_8px_rgba(139,92,246,0.35)] transition-all duration-500"
                         style={{ width: `${Math.min(cand.preferred_skills_score, 100)}%` }}
                       />
                     </div>
@@ -225,11 +228,11 @@ export const JobRankingsPage: React.FC = () => {
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[11px] font-mono">
                       <span className="text-neutral-500">Experience (15%)</span>
-                      <span className="font-bold text-[#1b1b1b]">{cand.experience_alignment_score}%</span>
+                      <span className="font-bold text-[#c2410c]">{cand.experience_alignment_score}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-neutral-200/80 rounded-full overflow-hidden shadow-inner p-0.5">
                       <div
-                        className="h-full bg-neutral-600 rounded-full"
+                        className="h-full bg-gradient-to-r from-[#fdba74] to-[#ea580c] rounded-full shadow-[0_0_8px_rgba(249,115,22,0.35)] transition-all duration-500"
                         style={{ width: `${Math.min(cand.experience_alignment_score, 100)}%` }}
                       />
                     </div>
@@ -248,18 +251,18 @@ export const JobRankingsPage: React.FC = () => {
                       <p className="text-neutral-600 leading-relaxed">{cand.score_explanation}</p>
                     </div>
 
-                    {/* Matched vs Missing Skills Grid (Monochrome skill tags) */}
+                    {/* Matched vs Missing Skills Grid (Glossy pastel skill tags) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-3.5 rounded-lg border border-black/10 bg-white space-y-2">
-                        <span className="text-xs font-bold text-[#1b1b1b] flex items-center gap-1.5 font-mono">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-neutral-800" />
+                      <div className="p-3.5 rounded-xl border-t border-t-white border-black/10 bg-gradient-to-b from-white to-[#fbfbfa] shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_6px_rgba(0,0,0,0.04)] space-y-2">
+                        <span className="text-xs font-bold text-[#15803d] flex items-center gap-1.5 font-mono">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#15803d]" />
                           Matched Required Skills ({cand.matched_required_skills.length})
                         </span>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1.5">
                           {cand.matched_required_skills.map((s, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-0.5 rounded text-[11px] font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
+                              className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#dcfce7] text-[#15803d] border border-[#bbf7d0] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.04)]"
                             >
                               {s}
                             </span>
@@ -270,37 +273,40 @@ export const JobRankingsPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-lg border border-black/10 bg-white space-y-2">
-                        <span className="text-xs font-bold text-neutral-700 flex items-center gap-1.5 font-mono">
-                          <XCircle className="w-3.5 h-3.5 text-neutral-400" />
+                      <div className="p-3.5 rounded-xl border-t border-t-white border-black/10 bg-gradient-to-b from-white to-[#fbfbfa] shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_6px_rgba(0,0,0,0.04)] space-y-2">
+                        <span className="text-xs font-bold text-[#be123c] flex items-center gap-1.5 font-mono">
+                          <XCircle className="w-3.5 h-3.5 text-[#be123c]" />
                           Missing Required Skills ({cand.missing_required_skills.length})
                         </span>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1.5">
                           {cand.missing_required_skills.map((s, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-0.5 rounded text-[11px] font-mono bg-black/[0.03] text-neutral-500 border border-black/10"
+                              className="px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-[#ffe4e6] text-[#be123c] border border-[#fecdd3] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
                             >
                               {s}
                             </span>
                           ))}
                           {cand.missing_required_skills.length === 0 && (
-                            <span className="text-xs text-neutral-800 font-medium">All mandatory requirements fulfilled</span>
+                            <span className="text-xs text-[#15803d] font-medium flex items-center gap-1">
+                              ✓ All mandatory requirements fulfilled
+                            </span>
                           )}
                         </div>
                       </div>
                     </div>
 
                     {cand.matched_preferred_skills.length > 0 && (
-                      <div className="p-3.5 rounded-lg border border-black/10 bg-white space-y-2">
-                        <span className="text-xs font-bold text-[#1b1b1b] font-mono">
+                      <div className="p-3.5 rounded-xl border-t border-t-white border-black/10 bg-gradient-to-b from-white to-[#fbfbfa] shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_6px_rgba(0,0,0,0.04)] space-y-2">
+                        <span className="text-xs font-bold text-[#6d28d9] font-mono flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#7c3aed]" />
                           Preferred Skills Coverage ({cand.matched_preferred_skills.length})
                         </span>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1.5">
                           {cand.matched_preferred_skills.map((s, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-0.5 rounded text-[11px] font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
+                              className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#ede9fe] text-[#6d28d9] border border-[#ddd6fe] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.04)]"
                             >
                               {s}
                             </span>

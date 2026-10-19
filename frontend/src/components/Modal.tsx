@@ -53,9 +53,9 @@ export const Modal: React.FC<ModalProps> = ({
         onClick={onClose}
       />
       
-      {/* Dialog container: Air off-white card */}
+      {/* Dialog container: Glossy glass surface with specular highlight */}
       <div
-        className={`relative w-full ${widthClasses} overflow-hidden rounded-[12px] bg-[#f5f5f5] text-[#1b1b1b] p-6 shadow-2xl transition-all animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col`}
+        className={`relative w-full ${widthClasses} overflow-hidden rounded-[16px] bg-gradient-to-b from-white via-[#fafaf9] to-[#f4f4f5] text-[#1b1b1b] p-6 border-t border-t-white border-x border-b border-black/10 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.95),0_24px_60px_-12px_rgba(0,0,0,0.6)] transition-all animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col`}
       >
         <div className="flex items-start justify-between pb-4 border-b border-black/10">
           <div>

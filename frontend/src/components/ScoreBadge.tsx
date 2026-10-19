@@ -16,14 +16,16 @@ export const ScoreBadge: React.FC<ScoreBadgeProps> = ({
 }) => {
   const rounded = Math.round(score);
 
-  // Clean, monochrome with selective Signal Blue emphasis for top matches
-  let colorClasses = 'bg-black/5 text-[#1b1b1b] border-black/10';
+  // Glossy pastel badges with specular highlight
+  let colorClasses = 'bg-[#f1f5f9] text-[#475569] border-[#cbd5e1]';
   if (rounded >= 85) {
-    colorClasses = 'bg-[#2b7fff]/10 text-[#2b7fff] border-[#2b7fff]/30';
+    colorClasses = 'bg-[#dcfce7] text-[#15803d] border-[#86efac]';
   } else if (rounded >= 70) {
-    colorClasses = 'bg-[#426188]/10 text-[#426188] border-[#426188]/30';
+    colorClasses = 'bg-[#e0f2fe] text-[#0369a1] border-[#7dd3fc]';
+  } else if (rounded >= 55) {
+    colorClasses = 'bg-[#ffedd5] text-[#c2410c] border-[#fdba74]';
   } else {
-    colorClasses = 'bg-black/5 text-neutral-600 border-black/10';
+    colorClasses = 'bg-[#ffe4e6] text-[#be123c] border-[#fca5a5]';
   }
 
   const sizeClasses = {
@@ -34,7 +36,7 @@ export const ScoreBadge: React.FC<ScoreBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center rounded-md border font-mono tracking-tight ${colorClasses} ${sizeClasses} ${className}`}
+      className={`inline-flex items-center rounded-lg border font-mono tracking-tight shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_1px_3px_rgba(0,0,0,0.05)] ${colorClasses} ${sizeClasses} ${className}`}
       title={`AI Match Score: ${score}%`}
     >
       {showIcon && <Sparkles className="w-3.5 h-3.5 shrink-0 opacity-80" />}

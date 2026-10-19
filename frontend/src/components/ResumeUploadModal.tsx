@@ -210,8 +210,8 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
             </div>
 
             {parsedData.uncertain_fields && parsedData.uncertain_fields.length > 0 && (
-              <div className="p-3 rounded-lg bg-black/5 border border-black/10 text-neutral-700 text-xs flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 shrink-0 text-[#2b7fff]" />
+              <div className="p-3.5 rounded-xl bg-gradient-to-r from-[#e0f2fe]/60 to-[#ede9fe]/60 border border-[#bae6fd] text-neutral-800 text-xs flex items-center gap-2.5 shadow-sm">
+                <AlertTriangle className="w-4 h-4 shrink-0 text-[#0284c7]" />
                 <span>
                   <strong>Review Notice:</strong> Please verify {parsedData.uncertain_fields.join(', ')} before saving.
                 </span>
@@ -295,13 +295,13 @@ export const ResumeUploadModal: React.FC<ResumeUploadModalProps> = ({
                 {formData.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/5 text-[#1b1b1b] border border-black/10"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#e0f2fe] text-[#0369a1] border border-[#bae6fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
                   >
                     {skill}
                     <button
                       type="button"
                       onClick={() => handleRemoveSkill(skill)}
-                      className="hover:text-black opacity-60 hover:opacity-100 focus:outline-none"
+                      className="hover:text-red-600 opacity-70 hover:opacity-100 focus:outline-none transition-colors"
                     >
                       <X className="w-3 h-3" />
                     </button>

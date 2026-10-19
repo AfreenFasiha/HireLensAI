@@ -201,13 +201,13 @@ export const CandidatesPage: React.FC = () => {
                   <tr key={cand.id} className="hover:bg-black/[0.02] transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-black/5 text-[#1b1b1b] font-mono font-bold text-xs uppercase border border-black/10">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ede9fe] to-[#ddd6fe] text-[#6d28d9] font-mono font-bold text-xs uppercase border-t border-t-white border-black/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_4px_rgba(0,0,0,0.05)]">
                           {cand.full_name ? cand.full_name[0] : 'C'}
                         </div>
                         <div>
                           <button
                             onClick={() => handleOpenCandidateDetails(cand)}
-                            className="font-bold text-sm text-[#1b1b1b] hover:text-[#2b7fff] transition-colors text-left"
+                            className="font-bold text-sm text-[#1b1b1b] hover:text-[#0284c7] transition-colors text-left"
                           >
                             {cand.full_name}
                           </button>
@@ -236,11 +236,11 @@ export const CandidatesPage: React.FC = () => {
                     </td>
 
                     <td className="py-3.5 px-4 max-w-xs">
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1.5">
                         {cand.skills?.slice(0, 4).map((s, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-0.5 rounded text-[10px] font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
+                            className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#e0f2fe] text-[#0369a1] border border-[#bae6fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
                           >
                             {s.skill_name}
                           </span>
@@ -259,7 +259,7 @@ export const CandidatesPage: React.FC = () => {
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-black/5 text-[#1b1b1b] border border-black/10">
+                      <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-medium bg-[#fef9c3] text-[#a16207] border border-[#fef08a] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                         {cand.active_applications_count || 0} Apps
                       </span>
                     </td>

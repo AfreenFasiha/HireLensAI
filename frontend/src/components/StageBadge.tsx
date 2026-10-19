@@ -9,67 +9,67 @@ interface StageBadgeProps {
 const STAGE_CONFIG: Record<string, { label: string; bg: string; text: string; border: string }> = {
   APPLIED: {
     label: 'Applied',
-    bg: 'bg-black/5',
-    text: 'text-[#1b1b1b]',
-    border: 'border-black/10'
+    bg: 'bg-[#e0f2fe]',
+    text: 'text-[#0369a1]',
+    border: 'border-[#bae6fd]'
   },
   SCREENING: {
     label: 'Screening',
-    bg: 'bg-[#426188]/10',
-    text: 'text-[#426188]',
-    border: 'border-[#426188]/20'
+    bg: 'bg-[#ede9fe]',
+    text: 'text-[#6d28d9]',
+    border: 'border-[#ddd6fe]'
   },
   SHORTLISTED: {
     label: 'Shortlisted',
-    bg: 'bg-[#2b7fff]/10',
-    text: 'text-[#2b7fff]',
-    border: 'border-[#2b7fff]/25'
+    bg: 'bg-[#dcfce7]',
+    text: 'text-[#15803d]',
+    border: 'border-[#bbf7d0]'
   },
   INTERVIEW: {
     label: 'Interview',
-    bg: 'bg-neutral-800 text-white',
-    text: 'text-neutral-100',
-    border: 'border-neutral-700'
+    bg: 'bg-[#fef9c3]',
+    text: 'text-[#a16207]',
+    border: 'border-[#fef08a]'
   },
   OFFER: {
     label: 'Offer',
-    bg: 'bg-neutral-900',
-    text: 'text-white',
-    border: 'border-neutral-600'
+    bg: 'bg-[#fae8ff]',
+    text: 'text-[#86198f]',
+    border: 'border-[#f5d0fe]'
   },
   HIRED: {
     label: 'Hired',
-    bg: 'bg-[#1b1b1b]',
-    text: 'text-white',
-    border: 'border-black'
+    bg: 'bg-[#ccfbf1]',
+    text: 'text-[#0f766e]',
+    border: 'border-[#99f6e4]'
   },
   REJECTED: {
     label: 'Rejected',
-    bg: 'bg-black/5',
-    text: 'text-neutral-500',
-    border: 'border-black/10'
+    bg: 'bg-[#ffe4e6]',
+    text: 'text-[#be123c]',
+    border: 'border-[#fecdd3]'
   },
   WITHDRAWN: {
     label: 'Withdrawn',
-    bg: 'bg-black/5',
-    text: 'text-neutral-400',
-    border: 'border-black/10'
+    bg: 'bg-[#f1f5f9]',
+    text: 'text-[#475569]',
+    border: 'border-[#e2e8f0]'
   }
 };
 
 export const StageBadge: React.FC<StageBadgeProps> = ({ stage, className = '' }) => {
   const config = STAGE_CONFIG[stage] || {
     label: stage,
-    bg: 'bg-black/5',
+    bg: 'bg-[#f1f5f9]',
     text: 'text-neutral-600',
-    border: 'border-black/10'
+    border: 'border-[#e2e8f0]'
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${config.bg} ${config.text} ${config.border} ${className}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold font-mono border shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.04)] ${config.bg} ${config.text} ${config.border} ${className}`}
     >
-      <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current opacity-70" />
+      <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current opacity-80" />
       {config.label}
     </span>
   );

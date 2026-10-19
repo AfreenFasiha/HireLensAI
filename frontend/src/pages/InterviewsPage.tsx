@@ -187,17 +187,17 @@ export const InterviewsPage: React.FC = () => {
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-bold text-base text-[#1b1b1b]">{iv.title}</h3>
                     <span
-                      className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded border ${
+                      className={`px-2.5 py-0.5 text-[10px] font-mono uppercase rounded-full border font-medium ${
                         iv.status === 'SCHEDULED'
-                          ? 'bg-black/5 text-[#1b1b1b] border-black/10'
+                          ? 'bg-[#e0f2fe] text-[#0369a1] border-[#bae6fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]'
                           : iv.status === 'COMPLETED'
-                          ? 'bg-black text-white border-black'
-                          : 'bg-black/5 text-neutral-400 border-black/10 line-through'
+                          ? 'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]'
+                          : 'bg-[#ffe4e6] text-[#be123c] border-[#fecdd3] line-through'
                       }`}
                     >
                       {iv.status}
                     </span>
-                    <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-black/5 text-[#1b1b1b] border border-black/10">
+                    <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-medium bg-[#ede9fe] text-[#6d28d9] border border-[#ddd6fe] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                       {iv.interview_type}
                     </span>
                   </div>
@@ -229,7 +229,7 @@ export const InterviewsPage: React.FC = () => {
                         href={iv.meeting_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-[#2b7fff] font-mono font-semibold hover:underline"
+                        className="inline-flex items-center gap-1 text-xs text-[#0284c7] font-mono font-semibold hover:underline"
                       >
                         <Video className="w-3.5 h-3.5" />
                         <span>Open Video Conference Coordinates</span>
@@ -240,13 +240,17 @@ export const InterviewsPage: React.FC = () => {
 
                   {/* Feedback Summary if available */}
                   {iv.feedbacks && iv.feedbacks.length > 0 && (
-                    <div className="mt-3 p-3.5 rounded-lg bg-white border border-black/10 text-xs space-y-1 font-mono">
+                    <div className="mt-3 p-3.5 rounded-xl bg-gradient-to-b from-white to-[#fbfbfa] border-t border-t-white border-black/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)] text-xs space-y-1 font-mono">
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-[#1b1b1b] flex items-center gap-1">
-                          <Star className="w-3.5 h-3.5 text-neutral-800 fill-neutral-800" />
+                          <Star className="w-3.5 h-3.5 text-[#eab308] fill-[#eab308]" />
                           Feedback by {iv.feedbacks[0].reviewer_name} (Rating: {iv.feedbacks[0].rating}/5)
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-black/5 text-[#1b1b1b]">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] ${
+                          iv.feedbacks[0].recommendation === 'STRONG_YES' || iv.feedbacks[0].recommendation === 'YES'
+                            ? 'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0]'
+                            : 'bg-[#ffe4e6] text-[#be123c] border-[#fecdd3]'
+                        }`}>
                           {iv.feedbacks[0].recommendation}
                         </span>
                       </div>

@@ -61,8 +61,8 @@ export const AnalyticsPage: React.FC = () => {
     window.open(url, '_blank');
   };
 
-  // Restrained Air palette for pie chart series (Twilight, Signal, Slate, Ink)
-  const AIR_STAGE_PALETTE = ['#1b1b1b', '#426188', '#2b7fff', '#5c7c99', '#374151', '#4b5563', '#6b7280', '#9ca3af'];
+  // Soft luminous pastel palette for pipeline stages (Sky, Lavender, Mint, Peach, Rose, Butter, Sage, Slate)
+  const AIR_STAGE_PALETTE = ['#38bdf8', '#a78bfa', '#4ade80', '#fb923c', '#f472b6', '#facc15', '#2dd4bf', '#94a3b8'];
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#000000] text-white">
@@ -82,13 +82,13 @@ export const AnalyticsPage: React.FC = () => {
 
       <div className="p-6 lg:p-8 space-y-8 flex-1 max-w-[1150px] w-full mx-auto">
         {/* Filters Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center p-4 rounded-lg border border-white/10 bg-white/[0.03]">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center p-4 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Filter className="w-4 h-4 text-neutral-400" />
             <select
               value={selectedJobId}
               onChange={(e) => setSelectedJobId(e.target.value)}
-              className="text-xs py-1.5 px-3 rounded border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
+              className="text-xs py-1.5 px-3 rounded-lg border border-white/20 bg-[#0d0d0d] text-white focus:outline-none focus:border-white font-mono"
             >
               <option value="">All Job Positions</option>
               {jobs.map((j) => (
@@ -119,31 +119,35 @@ export const AnalyticsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 4 Conversion Funnel KPI Cards (air-card) */}
+        {/* 4 Conversion Funnel KPI Cards (air-card with glossy pastel accents) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
             title="Shortlist Rate"
             value={`${analytics?.conversion_metrics.shortlist_rate ?? 0}%`}
             subtitle="Applied to qualified ratio"
             icon={Percent}
+            pastelColor="lavender"
           />
           <MetricCard
             title="Interview Conversion"
             value={`${analytics?.conversion_metrics.interview_conversion_rate ?? 0}%`}
             subtitle="Advanced to rounds"
             icon={Calendar}
+            pastelColor="sky"
           />
           <MetricCard
             title="Hiring Rate"
             value={`${analytics?.conversion_metrics.hire_conversion_rate ?? 0}%`}
             subtitle="Offer acceptances"
             icon={CheckCircle2}
+            pastelColor="mint"
           />
           <MetricCard
             title="Time to Hire"
             value={`${analytics?.conversion_metrics.average_time_to_hire_days ?? 0}d`}
             subtitle="Application to offer cycle"
             icon={Clock}
+            pastelColor="peach"
           />
         </div>
 
@@ -159,6 +163,12 @@ export const AnalyticsPage: React.FC = () => {
               {analytics && analytics.applications_trend.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={analytics.applications_trend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="pastelInflow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#38bdf8" stopOpacity={0.0} />
+                      </linearGradient>
+                    </defs>
                     <XAxis
                       dataKey="date"
                       tick={{ fontSize: 10, fill: '#737373' }}
@@ -170,19 +180,19 @@ export const AnalyticsPage: React.FC = () => {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#ffffff',
-                        borderColor: '#e5e5e5',
-                        borderRadius: '8px',
+                        borderColor: '#bae6fd',
+                        borderRadius: '10px',
                         fontSize: '12px',
                         color: '#1b1b1b',
-                        boxShadow: 'none'
+                        boxShadow: '0 4px 12px rgba(56, 189, 248, 0.15)'
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="applications"
-                      stroke="#426188"
-                      strokeWidth={2}
-                      fill="#f0f2f5"
+                      stroke="#0284c7"
+                      strokeWidth={2.5}
+                      fill="url(#pastelInflow)"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -209,14 +219,14 @@ export const AnalyticsPage: React.FC = () => {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#ffffff',
-                        borderColor: '#e5e5e5',
-                        borderRadius: '8px',
+                        borderColor: '#ddd6fe',
+                        borderRadius: '10px',
                         fontSize: '12px',
                         color: '#1b1b1b',
-                        boxShadow: 'none'
+                        boxShadow: '0 4px 12px rgba(167, 139, 250, 0.15)'
                       }}
                     />
-                    <Bar dataKey="count" fill="#1b1b1b" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="count" fill="#a78bfa" radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -248,14 +258,14 @@ export const AnalyticsPage: React.FC = () => {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#ffffff',
-                        borderColor: '#e5e5e5',
-                        borderRadius: '8px',
+                        borderColor: '#bbf7d0',
+                        borderRadius: '10px',
                         fontSize: '12px',
                         color: '#1b1b1b',
-                        boxShadow: 'none'
+                        boxShadow: '0 4px 12px rgba(74, 222, 128, 0.15)'
                       }}
                     />
-                    <Bar dataKey="applications_count" fill="#426188" radius={[0, 4, 4, 0]} name="Applications" />
+                    <Bar dataKey="applications_count" fill="#34d399" radius={[0, 6, 6, 0]} name="Applications" />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -278,8 +288,8 @@ export const AnalyticsPage: React.FC = () => {
                       nameKey="stage"
                       cx="50%"
                       cy="50%"
-                      outerRadius={75}
-                      innerRadius={45}
+                      outerRadius={78}
+                      innerRadius={46}
                       paddingAngle={3}
                     >
                       {analytics.stage_distribution.map((entry, index) => (

@@ -216,18 +216,18 @@ export const JobsPage: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#426188] font-mono">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider text-[#0369a1] bg-[#e0f2fe] border border-[#bae6fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] font-mono">
                       {job.department}
                     </span>
-                    <h3 className="text-base font-bold text-[#1b1b1b] hover:text-[#2b7fff] transition-colors mt-0.5">
+                    <h3 className="text-base font-bold text-[#1b1b1b] hover:text-[#0284c7] transition-colors mt-1.5">
                       <Link to={`/jobs/${job.id}/rankings`}>{job.title}</Link>
                     </h3>
                   </div>
 
                   <span
-                    className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded border ${
+                    className={`px-2.5 py-0.5 text-[10px] font-mono uppercase rounded-full border font-medium ${
                       job.status === 'ACTIVE'
-                        ? 'bg-black/5 text-[#1b1b1b] border-black/10'
+                        ? 'bg-[#dcfce7] text-[#15803d] border-[#bbf7d0] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]'
                         : 'bg-black/5 text-neutral-400 border-black/10'
                     }`}
                   >
@@ -258,11 +258,11 @@ export const JobsPage: React.FC = () => {
                 {/* Required Skills Badges */}
                 <div className="pt-2">
                   <p className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 mb-1.5">Required Skills</p>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {job.required_skills?.map((sk, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded text-[11px] font-mono bg-black/5 text-[#1b1b1b] border border-black/10"
+                        className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#f5f3ff] text-[#6d28d9] border border-[#ddd6fe] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.03)]"
                       >
                         {sk}
                       </span>
